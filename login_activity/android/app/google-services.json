@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "610095542199",
+    "firebase_url": "https://login-register-activity.firebaseio.com",
+    "project_id": "login-register-activity",
+    "storage_bucket": "login-register-activity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610095542199:android:358edf86d5ff735b49c232",
+        "android_client_info": {
+          "package_name": "com.example.loginactivity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610095542199-5bcp3qo1je5v64hgp3p181h0sgg81cje.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBC3y6Tcd_WBeImKdJWf5fe2JGxppRcCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610095542199-5bcp3qo1je5v64hgp3p181h0sgg81cje.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "610095542199-cgjlou6qjogurbpfnrdbp0sbrkka3k75.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.loginactivity"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

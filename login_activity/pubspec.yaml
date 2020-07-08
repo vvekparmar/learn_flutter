@@ -1,0 +1,31 @@
+name: loginactivity
+description: This Activity Performs Login and Register using Firebase.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+  firebase_auth:
+  google_sign_in:
+  cloud_firestore:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/background.png
+    - assets/images/facebook.png
+    - assets/images/google.png
+
+  fonts:
+    - family: Abel
+      fonts:
+        - asset: assets/fonts/Abel-Regular.ttf
