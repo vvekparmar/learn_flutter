@@ -1,0 +1,24 @@
+name: inshorts_clone
+description: This applications clone a inshorts news app.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.3
+  http:
+  flutter_swiper:
+  curved_navigation_bar:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
