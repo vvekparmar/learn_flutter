@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'signup.dart';
-
-void main() => runApp(MaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: LoginPage(),
-    );
-  }
-}
+import 'home.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -18,6 +10,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String email;
+  String password;
+  final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,6 +90,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         hintText: "Email Address",
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          email = value.trim();
+                        });
+                      },
                     ),
                     SizedBox(height: 15),
                     TextField(
@@ -107,6 +108,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         hintText: "Password",
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          password = value.trim();
+                        });
+                      },
                     ),
                     SizedBox(height: 15),
                     Text(
@@ -121,25 +127,48 @@ class _LoginPageState extends State<LoginPage> {
                           height: 55,
                           width: MediaQuery.of(context).size.width * 0.37,
                           child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                             color: Colors.lightBlueAccent,
                             textColor: Colors.white,
-                            child: Text("Login",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20)),
-                            onPressed: () {},
+                            child: Text("Login",style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20)),
+                            onPressed:() async{
+                              try {
+                                await auth.signInWithEmailAndPassword(email: email, password: password).then((_){
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+                                });
+                              } on FirebaseAuthException catch (e) {
+                                if (e.code == "wrong-password") {
+                                  Fluttertoast.showToast(
+                                    msg: "Your provided password is wrong",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM_RIGHT,
+                                  );
+                                }else if(e.code == 'too-many-requests'){
+                                  Fluttertoast.showToast(
+                                    msg: "You have too many requests on server.",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM_RIGHT,
+                                  );
+                                }
+                              } catch (e) {
+                                Fluttertoast.showToast(
+                                  msg: e,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                );
+                              }
+                            },
                           ),
                         ),
                         SizedBox(width: 22),
                         CircleAvatar(
                             backgroundImage:
-                                AssetImage('assets/images/google.jpg'),
+                            AssetImage('assets/images/google.jpg'),
                             radius: 28),
                         SizedBox(width: 22),
                         CircleAvatar(
                             backgroundImage:
-                                AssetImage('assets/images/facebook.jpg'),
+                            AssetImage('assets/images/facebook.jpg'),
                             radius: 28),
                       ],
                     ),
@@ -149,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                         "Don't have an Account? Create one",
                         textAlign: TextAlign.center,
                         style:
-                            TextStyle(color: Colors.blueAccent, fontSize: 18),
+                        TextStyle(color: Colors.blueAccent, fontSize: 18),
                       ),
                       onTap: () {
                         Navigator.push(
@@ -174,7 +203,7 @@ class SideClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     final roundingHeight = size.height * 2 / 5;
     final filledRectangle =
-        Rect.fromLTRB(0, 0, size.width, size.height - roundingHeight);
+    Rect.fromLTRB(0, 0, size.width, size.height - roundingHeight);
     final roundingRectangle = Rect.fromLTRB(
         0, size.height - roundingHeight * 2, size.width + 5, size.height);
 

@@ -1,5 +1,8 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'login.dart';
+import 'home.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -7,6 +10,10 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  String email;
+  String password;
+  final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,11 +69,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   Padding(
                     padding: EdgeInsets.all(50),
                     child: Text("SIGN UP",
-                        style: TextStyle(color: Colors.white, fontSize: 38)),
+                        style: TextStyle(color: Colors.white, fontSize: 35)),
                   )
                 ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
               Padding(
                 padding: EdgeInsets.only(left: 30, right: 30),
                 child: Column(
@@ -83,32 +90,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         hintText: "Email Address",
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          email = value.trim();
+                        });
+                      },
                     ),
-                    SizedBox(height: 10),
-                    TextField(
-                      decoration: new InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        border: new OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(30.0),
-                          ),
-                        ),
-                        hintText: "Username",
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    TextField(
-                      decoration: new InputDecoration(
-                        prefixIcon: Icon(Icons.phone),
-                        border: new OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(30.0),
-                          ),
-                        ),
-                        hintText: "Contact No.",
-                      ),
-                    ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 15),
                     TextField(
                       obscureText: true,
                       decoration: new InputDecoration(
@@ -120,8 +108,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         hintText: "Password",
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          password = value.trim();
+                        });
+                      },
                     ),
-                    SizedBox(height: 25),
+                    SizedBox(height: 50),
                     Row(
                       children: [
                         Container(
@@ -132,7 +125,36 @@ class _SignUpPageState extends State<SignUpPage> {
                             color: Colors.lightBlueAccent,
                             textColor: Colors.white,
                             child: Text("SIGN UP",style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20)),
-                            onPressed: (){},
+                            onPressed: () async {
+                              try {
+                                UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                                    email: email,
+                                    password: password
+                                ).then((_){
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+                                });
+                              } on FirebaseAuthException catch (e) {
+                                if (e.code == 'weak-password') {
+                                  Fluttertoast.showToast(
+                                    msg: "The password provided is too weak.",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM_RIGHT,
+                                  );
+                                } else if (e.code == 'email-already-in-use') {
+                                  Fluttertoast.showToast(
+                                    msg: "The account already exists for that email.",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM_RIGHT,
+                                  );
+                                }
+                              } catch (e) {
+                                Fluttertoast.showToast(
+                                  msg: e,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                );
+                              }
+                            },
                           ),
                         ),
                         SizedBox(width: 22),
@@ -141,7 +163,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         CircleAvatar(backgroundImage:AssetImage('assets/images/facebook.jpg'),radius:28),
                       ],
                     ),
-                    SizedBox(height:25),
+                    SizedBox(height: 40),
                     GestureDetector(
                       child: Text(
                         "Account Already Existed! Login",
