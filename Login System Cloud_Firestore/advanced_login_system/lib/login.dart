@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       children: [
                         Container(
-                          height: 55,
+                          height: 57,
                           width: MediaQuery.of(context).size.width * 0.37,
                           child: FlatButton(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -191,15 +191,15 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.01),
                         FlatButton(
-                          child:CircleAvatar(backgroundImage:AssetImage('assets/images/google.jpg'),radius:25),
+                          child:CircleAvatar(backgroundImage:AssetImage('assets/images/google.jpg'),radius:30),
                           onPressed: () => googleSignIn().whenComplete(() => {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()))
                           }),
                         ),
-                        SizedBox(width: 10),
-                        CircleAvatar(backgroundImage:AssetImage('assets/images/facebook.jpg'),radius:25),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.01),
+                        CircleAvatar(backgroundImage:AssetImage('assets/images/facebook.jpg'),radius:30),
                       ],
                     ),
                     SizedBox(height: 40),

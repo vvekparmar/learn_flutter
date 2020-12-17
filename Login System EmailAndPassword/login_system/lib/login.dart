@@ -124,8 +124,8 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       children: [
                         Container(
-                          height: 55,
-                          width: MediaQuery.of(context).size.width * 0.37,
+                          height: 57,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           child: FlatButton(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                             color: Colors.lightBlueAccent,
@@ -160,16 +160,16 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                         ),
-                        SizedBox(width: 22),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.1),
                         CircleAvatar(
                             backgroundImage:
                             AssetImage('assets/images/google.jpg'),
-                            radius: 28),
-                        SizedBox(width: 22),
+                            radius: 30),
+                        SizedBox(width: MediaQuery.of(context).size.width*0.1),
                         CircleAvatar(
                             backgroundImage:
                             AssetImage('assets/images/facebook.jpg'),
-                            radius: 28),
+                            radius: 30),
                       ],
                     ),
                     SizedBox(height: 40),
