@@ -1,0 +1,37 @@
+name: ecommerce_app
+description: Basic Ecommerce Application
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons:
+  cloud_firestore:
+  firebase_core:
+  firebase_auth:
+  google_sign_in:
+  fluttertoast:
+  multi_image_picker:
+  mailer:
+  firebase_storage:
+  flutter_swiper:
+  curved_navigation_bar:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/google.jpg
+    - assets/images/facebook.jpg
